@@ -2,7 +2,7 @@ streamlit
 pandas
 numpy
 seaborn
-sklearn
+scikit-learn
 
 
 
