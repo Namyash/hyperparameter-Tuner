@@ -13,7 +13,7 @@ from sklearn.linear_model import LogisticRegression, Perceptron, LinearRegressio
 from sklearn.metrics import mean_squared_error, accuracy_score,precision_score, recall_score, f1_score
 
 # Title of the app
-st.title("Dataset Uploader and Analyzer")
+st.title("ML Companion: Simplifying Data Insights and Model Tuning")
 
 # Step 1: Upload a CSV file
 uploaded_file = st.file_uploader("Upload your dataset (CSV file only)", type=["csv"])
