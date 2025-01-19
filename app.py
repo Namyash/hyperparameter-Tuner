@@ -30,7 +30,8 @@ if uploaded_file is not None:
         else:
             # Step 2: Show the preview of the dataset
             st.write("Here is a preview of your dataset:")
-            st.dataframe(df.head())
+            st.dataframe(df)
+            st.write(f"Total rows containing null values : {df.isnull().any(axis=1).sum()}/{len(df)}")
 
             # Step 3: Check the column types (numerical/categorical)
             categorical_cols = df.select_dtypes(include=['object']).columns.tolist()
@@ -146,7 +147,7 @@ if uploaded_file is not None:
 
                 # Show the dataset after standardization
                 st.write("Here is the dataset after standardization:")
-                st.dataframe(df.head())
+                st.dataframe(df)
 
                 # Step 8: Visualize Data
                 if st.checkbox("Visualize Data Distribution"):
@@ -195,7 +196,7 @@ if uploaded_file is not None:
                     st.warning("No features meet the correlation threshold. Please adjust the threshold or check your dataset.")
                 else:
                     st.write("Selected features dataset:")
-                    st.dataframe(df[selected_features].head())
+                    st.dataframe(df[selected_features])
 
                     if not selected_features:
                         st.warning("No features meet the correlation threshold. Please adjust the threshold or check your dataset.")
