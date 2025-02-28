@@ -21,12 +21,12 @@ import plotly.figure_factory as ff
 st.markdown("""
     <style>
     .main {
-        background-color: #420a52;
+        background-color: #ac11d6;
         padding: 20px;
         border-radius: 10px;
     }
     .stButton>button {
-        background-color: #420a52;
+        background-color: #ac11d6;
         color: white;
         border-radius: 5px;
         padding: 10px 20px;
@@ -42,7 +42,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Title with logo (simulated with text)
-st.markdown("<h1 style='text-align: center; color: #420a52;'>ML Companion: Generic Data Insights and Model Tuning</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #ac11d6;'>ML Companion: Generic Data Insights and Model Tuning</h1>", unsafe_allow_html=True)
 
 # Step 1: Upload a CSV file with sampling option for large datasets
 uploaded_file = st.file_uploader("Upload your dataset (CSV file only)", type=["csv"])
