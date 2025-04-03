@@ -1,3 +1,5 @@
+
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -63,6 +65,18 @@ if uploaded_file is not None:
         st.write("### Dataset Preview")
         st.dataframe(df.head())
         st.write(f"Total rows containing null values: {df.isnull().any(axis=1).sum()}/{len(df)}")
+
+        # Step 2.1: Add YData Profiling Report
+        if st.checkbox("Generate YData Profiling Report", help="Generate a detailed profiling report of your dataset"):
+            from ydata_profiling import ProfileReport
+            import streamlit.components.v1 as components
+
+            st.write("### YData Profiling Report")
+            with st.spinner("Generating YData Profiling Report..."):
+                profile = ProfileReport(df, title="Dataset Profiling Report", explorative=True)
+                profile_html = profile.to_html()
+                components.html(profile_html, height=1000, scrolling=True)
+            st.success("Profiling report generated successfully!")
 
         # Dataset statistics for guidance
         st.write("### Dataset Statistics")
