@@ -653,6 +653,15 @@ if uploaded_file is not None:
                 
                 **Feedback:** Contact us at [example@xai.com] to report issues or suggest features.
                 """)
+            st.write("""
+            ### Project Summary
+            The ML Companion is a comprehensive Streamlit application designed to simplify the machine learning workflow. It provides an interactive interface for data preprocessing, visualization, and model training, supporting both classification and regression tasks. The tool includes features like handling missing data, outlier management, feature engineering, and hyperparameter tuning, making it suitable for beginners and advanced users alike. Developed as a personal project, it aims to democratize access to machine learning tools by offering an intuitive, browser-based solution.
+
+            ### About Me
+            I am a passionate data science enthusiast with a keen interest in developing user-friendly tools for machine learning. With a background in computer science and hands-on experience in data analysis, I enjoy creating projects that bridge the gap between complex algorithms and practical applications. This project reflects my commitment to learning and sharing knowledge in the field of AI and data science.
+
+            
+            """)
 
     except Exception as e:
         st.error(f"Error: {e}. Please check your dataset or settings and try again.")
