@@ -661,6 +661,7 @@ if uploaded_file is not None:
                 ### About the Author
                 I am a passionate data scientist and developer with a keen interest in creating tools that democratize machine learning. With experience in building end-to-end ML pipelines, I developed ML Companion to empower users to explore and model their data effortlessly. Connect with me at namya.vishal.shah.campus@gmail.com for feedback or collaboration opportunities!
                 """)
+                st.image("profile.jpg", caption="Author: Namya Vishal Shah", width=200)
             
 
     except Exception as e:
