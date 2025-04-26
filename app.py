@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -16,6 +17,7 @@ import io
 import time
 from sklearn.metrics import confusion_matrix
 import plotly.figure_factory as ff
+from ydata_profiling import ProfileReport  # Added for ydata-profiling
 
 # Custom styling for a sexy UI
 st.markdown("""
@@ -345,45 +347,113 @@ if uploaded_file is not None:
                         )
 
                 # Step 9: Visualize Data with interactive Plotly
-                if st.checkbox("Visualize Data Distribution", help="Explore your data with interactive plots"):
+                # if st.checkbox("Visualize Data Distribution", help="Explore your data with interactive plots"):
+                #     st.write("### Data Visualization")
+                #     train_df = pd.DataFrame(X_train, columns=selected_features)
+                #     train_df[target_column] = y_train
+
+                #     viz_column = st.selectbox("Select a column to visualize", train_df.columns, 
+                #                              help="Choose a feature or target to visualize.")
+                #     viz_type = st.radio("Choose visualization type", ["Histogram", "Box Plot", "Scatter Plot", 
+                #                                                    "Heatmap", "Count Plot", "Violin Plot"],
+                #                         help="Select the type of plot for data exploration.")
+
+                #     if viz_type == "Histogram" and viz_column in numerical_cols:
+                #         fig = px.histogram(train_df, x=viz_column, nbins=30, title=f"Histogram of {viz_column}")
+                #         st.plotly_chart(fig)
+                #     elif viz_type == "Count Plot" and viz_column in categorical_cols:
+                #         fig = px.histogram(train_df, x=viz_column, title=f"Count Plot of {viz_column}")
+                #         st.plotly_chart(fig)
+                #     elif viz_type == "Box Plot" and viz_column in numerical_cols:
+                #         fig = px.box(train_df, y=viz_column, title=f"Box Plot of {viz_column}")
+                #         st.plotly_chart(fig)
+                #     elif viz_type == "Scatter Plot" and len(selected_features) > 1:
+                #         x_column = st.selectbox("Select x-axis column", selected_features, 
+                #                                help="Choose the x-axis feature for the scatter plot.")
+                #         y_column = st.selectbox("Select y-axis column", selected_features, 
+                #                                help="Choose the y-axis feature for the scatter plot.")
+                #         fig = px.scatter(train_df, x=x_column, y=y_column, color=target_column, 
+                #                         title=f"Scatter Plot: {x_column} vs {y_column}")
+                #         st.plotly_chart(fig)
+                #     elif viz_type == "Heatmap" and len(selected_features) > 1:
+                #         corr_matrix = train_df[selected_features].corr()
+                #         fig = px.imshow(corr_matrix, text_auto=True, aspect="auto", 
+                #                        title="Correlation Heatmap of Features")
+                #         st.plotly_chart(fig)
+                #     elif viz_type == "Violin Plot" and viz_column in numerical_cols:
+                #         fig = px.violin(train_df, y=viz_column, box=True, title=f"Violin Plot of {viz_column}")
+                #         st.plotly_chart(fig)
+                #     else:
+                #         st.write("Invalid combination of column and visualization type or insufficient features.")
+
+                # Step 9: Visualize Data with interactive Plotly and ydata-profiling
+                if st.checkbox("Visualize Data Distribution", help="Explore your data with interactive plots or a detailed profiling report"):
                     st.write("### Data Visualization")
                     train_df = pd.DataFrame(X_train, columns=selected_features)
                     train_df[target_column] = y_train
 
-                    viz_column = st.selectbox("Select a column to visualize", train_df.columns, 
-                                             help="Choose a feature or target to visualize.")
-                    viz_type = st.radio("Choose visualization type", ["Histogram", "Box Plot", "Scatter Plot", 
-                                                                   "Heatmap", "Count Plot", "Violin Plot"],
-                                        help="Select the type of plot for data exploration.")
+                    # Offer a choice between Plotly visualizations and ydata-profiling
+                    viz_option = st.radio("Choose visualization method", 
+                                        ["Interactive Plotly Charts", "YData Profiling Report"],
+                                        help="Select Plotly for custom interactive charts or YData Profiling for a comprehensive EDA report.")
 
-                    if viz_type == "Histogram" and viz_column in numerical_cols:
-                        fig = px.histogram(train_df, x=viz_column, nbins=30, title=f"Histogram of {viz_column}")
-                        st.plotly_chart(fig)
-                    elif viz_type == "Count Plot" and viz_column in categorical_cols:
-                        fig = px.histogram(train_df, x=viz_column, title=f"Count Plot of {viz_column}")
-                        st.plotly_chart(fig)
-                    elif viz_type == "Box Plot" and viz_column in numerical_cols:
-                        fig = px.box(train_df, y=viz_column, title=f"Box Plot of {viz_column}")
-                        st.plotly_chart(fig)
-                    elif viz_type == "Scatter Plot" and len(selected_features) > 1:
-                        x_column = st.selectbox("Select x-axis column", selected_features, 
-                                               help="Choose the x-axis feature for the scatter plot.")
-                        y_column = st.selectbox("Select y-axis column", selected_features, 
-                                               help="Choose the y-axis feature for the scatter plot.")
-                        fig = px.scatter(train_df, x=x_column, y=y_column, color=target_column, 
-                                        title=f"Scatter Plot: {x_column} vs {y_column}")
-                        st.plotly_chart(fig)
-                    elif viz_type == "Heatmap" and len(selected_features) > 1:
-                        corr_matrix = train_df[selected_features].corr()
-                        fig = px.imshow(corr_matrix, text_auto=True, aspect="auto", 
-                                       title="Correlation Heatmap of Features")
-                        st.plotly_chart(fig)
-                    elif viz_type == "Violin Plot" and viz_column in numerical_cols:
-                        fig = px.violin(train_df, y=viz_column, box=True, title=f"Violin Plot of {viz_column}")
-                        st.plotly_chart(fig)
-                    else:
-                        st.write("Invalid combination of column and visualization type or insufficient features.")
+                    if viz_option == "Interactive Plotly Charts":
+                        viz_column = st.selectbox("Select a column to visualize", train_df.columns, 
+                                                help="Choose a feature or target to visualize.")
+                        viz_type = st.radio("Choose visualization type", ["Histogram", "Box Plot", "Scatter Plot", 
+                                                                        "Heatmap", "Count Plot", "Violin Plot"],
+                                            help="Select the type of plot for data exploration.")
 
+                        if viz_type == "Histogram" and viz_column in numerical_cols:
+                            fig = px.histogram(train_df, x=viz_column, nbins=30, title=f"Histogram of {viz_column}")
+                            st.plotly_chart(fig)
+                        elif viz_type == "Count Plot" and viz_column in categorical_cols:
+                            fig = px.histogram(train_df, x=viz_column, title=f"Count Plot of {viz_column}")
+                            st.plotly_chart(fig)
+                        elif viz_type == "Box Plot" and viz_column in numerical_cols:
+                            fig = px.box(train_df, y=viz_column, title=f"Box Plot of {viz_column}")
+                            st.plotly_chart(fig)
+                        elif viz_type == "Scatter Plot" and len(selected_features) > 1:
+                            x_column = st.selectbox("Select x-axis column", selected_features, 
+                                                help="Choose the x-axis feature for the scatter plot.")
+                            y_column = st.selectbox("Select y-axis column", selected_features, 
+                                                help="Choose the y-axis feature for the scatter plot.")
+                            fig = px.scatter(train_df, x=x_column, y=y_column, color=target_column, 
+                                            title=f"Scatter Plot: {x_column} vs {y_column}")
+                            st.plotly_chart(fig)
+                        elif viz_type == "Heatmap" and len(selected_features) > 1:
+                            corr_matrix = train_df[selected_features].corr()
+                            fig = px.imshow(corr_matrix, text_auto=True, aspect="auto", 
+                                        title="Correlation Heatmap of Features")
+                            st.plotly_chart(fig)
+                        elif viz_type == "Violin Plot" and viz_column in numerical_cols:
+                            fig = px.violin(train_df, y=viz_column, box=True, title=f"Violin Plot of {viz_column}")
+                            st.plotly_chart(fig)
+                        else:
+                            st.write("Invalid combination of column and visualization type or insufficient features.")
+
+                    elif viz_option == "YData Profiling Report":
+                        st.write("### Generating YData Profiling Report")
+                        with st.spinner("Generating comprehensive EDA report..."):
+                            # Generate the profiling report
+                            profile = ProfileReport(train_df, title="EDA Report for Training Data", 
+                                                    explorative=True, minimal=False)
+                            # Save the report to a temporary HTML file
+                            temp_file = "eda_report.html"
+                            profile.to_file(temp_file)
+                            # Display the report in Streamlit using components.html
+                            with open(temp_file, "r", encoding="utf-8") as f:
+                                report_html = f.read()
+                            st.components.v1.html(report_html, height=1000, scrolling=True)
+                            # Provide a download button for the report
+                            st.download_button(
+                                label="Download YData Profiling Report",
+                                data=report_html,
+                                file_name="eda_report.html",
+                                mime="text/html"
+                            )
+                        st.success("YData Profiling Report generated successfully!")
+                
                 # Define models based on task type
                 classification_models = {
                     "Logistic Regression": (LogisticRegression(), {"C": [0.1, 1, 10, 100]}),
@@ -669,6 +739,5 @@ if uploaded_file is not None:
         if "uploaded_file" in locals():
             st.write("Dataset Preview (for debugging):")
             st.dataframe(df.head() if 'df' in locals() else "Data not loaded due to error.")
-
 
 
