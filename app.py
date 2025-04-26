@@ -653,6 +653,14 @@ if uploaded_file is not None:
                 
                 **Feedback:** Contact us at [example@xai.com] to report issues or suggest features.
                 """)
+            with st.expander("About This Website and Author", expanded=False):
+                st.write("""
+                ### About This Website
+                ML Companion is a user-friendly web application designed to simplify machine learning workflows. Built with Streamlit, it enables users to upload CSV datasets, preprocess data, visualize insights, and train models for both classification and regression tasks. With features like automated preprocessing, interactive visualizations, and hyperparameter tuning, it caters to beginners and advanced users alike, making data science accessible and efficient.
+
+                ### About the Author
+                I am a passionate data scientist and developer with a keen interest in creating tools that democratize machine learning. With experience in building end-to-end ML pipelines, I developed ML Companion to empower users to explore and model their data effortlessly. Connect with me at [example@xai.com] for feedback or collaboration opportunities!
+                """)
             
 
     except Exception as e:
