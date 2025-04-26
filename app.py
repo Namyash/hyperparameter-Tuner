@@ -19,7 +19,6 @@ from sklearn.metrics import confusion_matrix
 import plotly.figure_factory as ff
 from ydata_profiling import ProfileReport  # Added for ydata-profiling
 
-# Custom styling for a sexy UI
 st.markdown("""
     <style>
     .main {
@@ -729,7 +728,7 @@ if uploaded_file is not None:
                 ML Companion is a user-friendly web application designed to simplify machine learning workflows. Built with Streamlit, it enables users to upload CSV datasets, preprocess data, visualize insights, and train models for both classification and regression tasks. With features like automated preprocessing, interactive visualizations, and hyperparameter tuning, it caters to beginners and advanced users alike, making data science accessible and efficient.
 
                 ### About the Author
-                I am a passionate data scientist and developer with a keen interest in creating tools that democratize machine learning. With experience in building end-to-end ML pipelines, I developed ML Companion to empower users to explore and model their data effortlessly. Connect with me at namya.vishal.shah.campus@gmail.com for feedback or collaboration opportunities!
+                I am a passionate Data Science student  and developer with a keen interest in creating tools that democratize machine learning. With experience in building end-to-end ML pipelines, I developed ML Companion to empower users to explore and model their data effortlessly. Connect with me at namya.vishal.shah.campus@gmail.com for feedback or collaboration opportunities!
                 """)
                 st.image("profile.jpg", caption="Author: Namya Vishal Shah", width=200)
             
